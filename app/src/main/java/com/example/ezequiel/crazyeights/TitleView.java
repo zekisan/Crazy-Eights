@@ -10,26 +10,35 @@ import android.view.View;
 /**
  * Created by ezequiel on 02/04/15.
  */
-public class TitleView extends View{
+public class TitleView extends View {
 
     private Bitmap titleGraphic;
+    private int screenW;
+    private int screenH;
 
-    public TitleView(Context context){
+    public TitleView(Context context) {
         super(context);
-        titleGraphic = BitmapFactory.decodeResource(getResources(),R.drawable.title_graphic);
+        titleGraphic = BitmapFactory.decodeResource(getResources(), R.drawable.title_graphic);
     }
 
     @Override
-    public void onDraw(Canvas canvas){
-        canvas.drawBitmap(titleGraphic, 0, 0, null);
+    public void onSizeChanged(int w, int h, int oldW, int oldH) {
+        super.onSizeChanged(w, h, oldW, oldH);
+        screenW = w;
+        screenH = h;
     }
 
-    public boolean onTouchEvent(MotionEvent event){
-        int eventaction = event.getAction();
-        int X = (int)event.getX();
-        int Y = (int)event.getY();
+    @Override
+    protected void onDraw(Canvas canvas) {
+        canvas.drawBitmap(titleGraphic, (screenW - titleGraphic.getWidth()) / 2, 0, null);
+    }
 
-        switch (eventaction){
+    public boolean onTouchEvent(MotionEvent event) {
+        int eventaction = event.getAction();
+        int X = (int) event.getX();
+        int Y = (int) event.getY();
+
+        switch (eventaction) {
             case MotionEvent.ACTION_DOWN:
                 break;
             case MotionEvent.ACTION_MOVE:
